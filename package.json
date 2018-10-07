@@ -1,0 +1,22 @@
+{
+  "name": "user-admin-react-node",
+  "version": "1.0.0",
+  "description": "Example express-react app",
+  "main": "index.js",
+  "scripts": {
+    "devclient": "cd client && npm run start",
+    "devserver": "./node_modules/nodemon/bin/nodemon.js src/bin/example-express-react",
+    "dev": "concurrently 'npm run devserver' 'npm run devclient'",
+    "build": "cd client && npm run build",
+    "start": "node src/bin/example-express-react"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "nodemon": "^1.18.4"
+  }
+}
