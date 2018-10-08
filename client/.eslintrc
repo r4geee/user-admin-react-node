@@ -1,0 +1,40 @@
+{
+  "parser": "babel-eslint",
+  "extends": "react-app",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules" : {
+    "indent": ["error", 4],
+    "max-len" : ["error", 180],
+    "comma-dangle": ["error", "never"],
+    "space-before-function-paren" : ["error", "always"],
+    "arrow-body-style" : ["off"],
+    "func-names" : ["off"],
+    "new-cap" : ["error", {"capIsNewExceptions": ["Component"]}],
+    "brace-style" : ["error", "stroustrup"],
+    "no-console" : ["warn", { "allow": ["warn", "error", "info", "debug", "groupCollapsed", "groupEnd"] }],
+    "no-param-reassign" : ["off"],
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
+  },
+  "globals": {
+    "angular": false,
+    "SEED_CORE" : false,
+    "spyOn" : false,
+    "jasmine" : false,
+    "describe": false,
+    "it": false,
+    "xit": false,
+    "beforeAll": false,
+    "beforeEach": false,
+    "afterAll": false,
+    "afterEach": false,
+    "expect": false,
+    "$fixtures": true
+  }
+}
