@@ -12,7 +12,7 @@ Example React / Node Js app for user administration.
 
 ## Setup and Installation
 1. Make sure you have installed node >= v8.9 & npm >= v5.5.
-2. Run npm npm `npm run install-all`
+2. Run `npm run install-all`
 3. In root directory create `config.json` file
  
 ```json
