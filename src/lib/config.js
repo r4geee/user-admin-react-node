@@ -1,7 +1,7 @@
-const fs = require("fs-extra");
-const path = require("path");
+const fs = require('fs-extra');
+const path = require('path');
 
-const _ = require("lodash");
+const _ = require('lodash');
 
 const argsConfigPath = path.resolve(__dirname, '../../config.json');
 let config = {};
@@ -11,7 +11,7 @@ if (fs.existsSync(argsConfigPath)) {
 
     _.forOwn(config, (value, key) => {
         config[_.camelCase(key)] = config[key];
-    })
+    });
 }
 
 config.http = {};

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import axios from '../../axios';
 import classes from './Users.module.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 class Users extends Component {
     state = {
@@ -74,10 +74,10 @@ class Users extends Component {
 
     render () {
         const users = (
-            <ul className={"list-group " + classes.UserList}>
+            <ul className={'list-group ' + classes.UserList}>
                 {this.state.users.map(user => (<li
                     key={user.id}
-                    className={"list-group-item " + classes.UserListItem}
+                    className={'list-group-item ' + classes.UserListItem}
                     onClick={() => this.userSelectedHandler(user.id)}>
                     {user.email}
                     <span className="pull-right" onClick={(e) => this.userDeleteHandler(e, user.id, user.email)}>

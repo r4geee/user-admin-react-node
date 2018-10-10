@@ -9,7 +9,7 @@ export const setTokenHeader = token => {
 };
 
 export const deleteTokenHeader = () => {
-    delete instance.defaults.headers.common["Authorization"]
+    delete instance.defaults.headers.common['Authorization']
 };
 
 export default instance;

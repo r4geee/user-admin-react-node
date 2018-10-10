@@ -1,8 +1,7 @@
 import React from 'react';
 
 import classes from './Navbar.module.scss';
-// import Logo from "../../Logo/Logo";
-import NavigationItems from "../NavigationItems/NavigationItems";
+import NavigationItems from '../NavigationItems/NavigationItems';
 
 const navbar = props => (
     <nav className="navbar navbar-default navbar-fixed-top">
@@ -10,7 +9,6 @@ const navbar = props => (
             <div className="navbar-collapse collapse">
                 <div className="navbar-header">
                     <div className={classes.Logo}>
-                        {/*<Logo />*/}
                     </div>
                 </div>
                 <NavigationItems />

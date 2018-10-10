@@ -9,7 +9,7 @@ const formButton = props => {
         <div className="form-group ">
             <button
                 type="button"
-                className={"btn btn-lg btn-block" + bootstrapClass}
+                className={'btn btn-lg btn-block' + bootstrapClass}
                 onClick={props.clicked}>
                 {props.title}
             </button>

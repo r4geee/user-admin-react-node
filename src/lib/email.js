@@ -2,8 +2,14 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const nodemailer = require('nodemailer');
-const handlebars = require("handlebars");
+const handlebars = require('handlebars');
 
+const compileHtml = (title, text) => {
+    const templatePath = path.resolve(__dirname, '../templates/email.handlebars');
+    const fileContent = fs.readFileSync(templatePath).toString();
+    const template = handlebars.compile(fileContent);
+    return template({ title, text });
+};
 
 const mailTransport = nodemailer.createTransport({
     service: 'Gmail',
@@ -19,14 +25,7 @@ module.exports.sendEmail = (to, subject, title, text) => {
         to,
         subject,
         html: compileHtml(title, text)
-    }, function (err){
-        if (err) console.error( 'Unable to send email: ' + err );
+    }, (err) => {
+        if (err) console.error(`Unable to send email: ${err}`);
     });
 };
-
-function compileHtml(title, text) {
-    const templatePath = path.resolve(__dirname, '../templates/email.handlebars');
-    const fileContent = fs.readFileSync(templatePath).toString();
-    const template = handlebars.compile(fileContent);
-    return template({title, text});
-}

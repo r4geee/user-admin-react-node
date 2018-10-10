@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Form from "../../components/Form/Form";
-import FormField from "../../components/Form/FormField/FormField";
-import FormButton from "../../components/Form/FormButton/FormButton";
-import axios from "../../axios";
-import {showModal} from "../../store/actions";
-import connect from "react-redux/es/connect/connect";
+import Form from '../../components/Form/Form';
+import FormField from '../../components/Form/FormField/FormField';
+import FormButton from '../../components/Form/FormButton/FormButton';
+import axios from '../../axios';
+import {showModal} from '../../store/actions';
+import connect from 'react-redux/es/connect/connect';
 
 class Registration extends Component {
     state = {
@@ -45,17 +45,17 @@ class Registration extends Component {
             })
                 .then(response => {
                     this.props.setModal({
-                        type: "success",
-                        title: "Success",
-                        text: "New user registered"
+                        type: 'success',
+                        title: 'Success',
+                        text: 'New user registered'
                     });
                 })
         }
         else {
             this.props.setModal({
-                type: "error",
-                title: "Error",
-                text: "User registration failed"
+                type: 'error',
+                title: 'Error',
+                text: 'User registration failed'
             });
         }
     };

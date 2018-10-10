@@ -5,15 +5,15 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {faEnvelope, faLock, faLockOpen, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Route, Switch, Redirect} from 'react-router-dom';
 
-import Layout from "./hoc/Layout/Layout";
+import Layout from './hoc/Layout/Layout';
 import Registration from './containers/Registration/Registration';
 import Login from './containers/Login/Login';
 import PasswordRecovery from './containers/PasswordRecovery/PasswordRecovery';
-import AddUser from "./containers/Users/AddUser/AddUser";
-import Users from "./containers/Users/Users";
-import withErrorHandler from "./hoc/withErrorHandler/withErrorHandler";
+import AddUser from './containers/Users/AddUser/AddUser';
+import Users from './containers/Users/Users';
+import withErrorHandler from './hoc/withErrorHandler/withErrorHandler';
 import axios from './axios';
-import UserDetails from "./containers/Users/UserDetails/UserDetails";
+import UserDetails from './containers/Users/UserDetails/UserDetails';
 
 library.add(faEnvelope, faLock, faLockOpen, faTrash);
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import axios from '../../../axios';
-import classes from "./UserDetails.module.scss";
+import classes from './UserDetails.module.scss';
 
 class UserDetails extends Component {
     state = {

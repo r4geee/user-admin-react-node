@@ -14,7 +14,7 @@ class Layout extends Component {
             <Aux>
                 <Navbar/>
                 <div className="container">
-                    <div className={classes.Main + " row"}>
+                    <div className={classes.Main + ' row'}>
                         <div className="col-xs-12">
                             {this.props.children}
                         </div>

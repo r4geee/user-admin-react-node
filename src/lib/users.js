@@ -13,34 +13,38 @@ const usersModule = module.exports;
 const dirPath = path.resolve(__dirname, '../../data');
 const filePath = path.resolve(dirPath, 'users.json');
 
-function ensureFileExits() {
+
+const doWriteFile = (data) => {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
+};
+
+const ensureFileExits = () => {
     if (!fs.existsSync(filePath)) {
         fs.ensureFileSync(filePath);
-        writeFile([]);
+        doWriteFile([]);
     }
-}
+};
 
-function readFile() {
+const writeFile = (data) => {
+    ensureFileExits();
+    doWriteFile(data);
+};
+
+const readFile = () => {
     ensureFileExits();
     return JSON.parse(fs.readFileSync(filePath));
-}
+};
 
-function writeFile(data) {
-    ensureFileExits();
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
-}
-
-function findUserBy(fieldName, fieldValue) {
+const findUserBy = (fieldName, fieldValue) => {
     const users = readFile();
     return users.find(user => user[fieldName] === fieldValue);
-}
-
+};
 
 usersModule.getUsers = () => {
     return readFile();
 };
 
-usersModule.addUser = userData => {
+usersModule.addUser = (userData) => {
     const pw = userData.password;
     delete userData.password;
 
@@ -53,18 +57,18 @@ usersModule.addUser = userData => {
     users.push(userData);
     writeFile(users);
 
-    email.sendEmail(userData.email, "Account created", "Password:", pw);
+    email.sendEmail(userData.email, 'Account created', 'Password:', pw);
     return true;
 };
 
-usersModule.deleteUser = userId => {
-    const user = findUserBy('id', userId);
-    if (!user) return;
+usersModule.deleteUser = (userId) => {
+    const userToDelete = findUserBy('id', userId);
+    if (!userToDelete) return;
 
-    const users = this.getUsers();
-    writeFile(users.filter(user => user.id !== userId));
+    const allUsers = this.getUsers();
+    writeFile(allUsers.filter(u => u.id !== userId));
 
-    email.sendEmail(user.email, "Account deleted", "Notification", "Your account has been deleted");
+    email.sendEmail(userToDelete.email, 'Account deleted', 'Notification', 'Your account has been deleted');
     return true;
 };
 
@@ -82,7 +86,7 @@ usersModule.checkUserExists = (userEmail) => {
 usersModule.changeUserPassword = (userEmail, newPassword) => {
     const users = this.getUsers();
     let found = false;
-    users.forEach(user => {
+    users.forEach((user) => {
         if (user.email === userEmail) {
             found = true;
 
@@ -94,10 +98,10 @@ usersModule.changeUserPassword = (userEmail, newPassword) => {
     writeFile(users);
 };
 
-usersModule.addLoginEntry = userEmail => {
+usersModule.addLoginEntry = (userEmail) => {
     const users = this.getUsers();
     let found = false;
-    users.forEach(user => {
+    users.forEach((user) => {
         if (user.email === userEmail) {
             found = true;
 

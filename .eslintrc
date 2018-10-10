@@ -1,0 +1,31 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": "airbnb/base",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "babel"
+  ],
+  "rules" : {
+    "quotes": [2, "single"],
+    "indent": ["error", 4],
+    "max-len" : ["error", 180],
+    "comma-dangle": ["error", "never"],
+    "space-before-function-paren" : ["error", "always"],
+    "arrow-body-style" : ["off"],
+    "func-names" : ["off"],
+    "new-cap" : ["error", {"capIsNewExceptions": ["Router"]}],
+    "brace-style" : ["error", "stroustrup"],
+    "no-console" : ["warn", { "allow": ["warn", "error", "info", "debug", "groupCollapsed", "groupEnd"] }],
+    "no-param-reassign" : ["off"]
+  },
+  "globals": {
+    "CONF": true
+  }
+}

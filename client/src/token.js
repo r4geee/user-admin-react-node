@@ -1,5 +1,5 @@
-import {deleteTokenFromLs, getTokenFromLS, setTokenToLs} from "./localStorage";
-import {deleteTokenHeader, setTokenHeader} from "./axios";
+import {deleteTokenFromLs, getTokenFromLS, setTokenToLs} from './localStorage';
+import {deleteTokenHeader, setTokenHeader} from './axios';
 
 export const initToken = () => {
     const storedToken = getTokenFromLS();

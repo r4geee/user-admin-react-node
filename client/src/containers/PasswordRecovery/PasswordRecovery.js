@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
 import Form from '../../components/Form/Form';
-import FormField from "../../components/Form/FormField/FormField";
-import FormButton from "../../components/Form/FormButton/FormButton";
-import axios from "../../axios";
-import {showModal} from "../../store/actions";
-import connect from "react-redux/es/connect/connect";
+import FormField from '../../components/Form/FormField/FormField';
+import FormButton from '../../components/Form/FormButton/FormButton';
+import axios from '../../axios';
+import {showModal} from '../../store/actions';
+import connect from 'react-redux/es/connect/connect';
 
 class PasswordRecovery extends Component {
     state = {
@@ -25,17 +25,17 @@ class PasswordRecovery extends Component {
                 email: this.state.email
             }).then(response => {
                 this.props.setModal({
-                    type: "success",
-                    title: "Success",
-                    text: "New password will be sent to your email"
+                    type: 'success',
+                    title: 'Success',
+                    text: 'New password will be sent to your email'
                 });
             })
         }
         else {
             this.props.setModal({
-                type: "error",
-                title: "Error",
-                text: "Please enter email address"
+                type: 'error',
+                title: 'Error',
+                text: 'Please enter email address'
             });
         }
     };

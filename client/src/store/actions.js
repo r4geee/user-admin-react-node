@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, MODAL_SHOW, MODAL_HIDE } from "./actionTypes";
+import { LOGIN, LOGOUT, MODAL_SHOW, MODAL_HIDE } from './actionTypes';
 
 export const login = () => {
     return {

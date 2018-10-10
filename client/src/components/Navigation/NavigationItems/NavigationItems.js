@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import connect from "react-redux/es/connect/connect";
+import connect from 'react-redux/es/connect/connect';
 
-import NavigationItem from "./NavigationItem/NavigationItem";
+import NavigationItem from './NavigationItem/NavigationItem';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
-import { deleteToken } from "../../../token";
+import { deleteToken } from '../../../token';
 import { logout } from '../../../store/actions';
-import NavigationButton from "./NavigationButton/NavigationButton";
-import {withRouter} from "react-router";
+import NavigationButton from './NavigationButton/NavigationButton';
+import {withRouter} from 'react-router';
 
 class NavigationItems extends Component {
     onLogoutHandler = () => {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import AppModal from '../../components/UI/AppModal/AppModal';
 import Aux from '../Auxiliary/Auxiliary';
-import { showModal, hideModal } from "../../store/actions";
+import { showModal, hideModal } from '../../store/actions';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {

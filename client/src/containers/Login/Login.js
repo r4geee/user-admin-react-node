@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import axios from '../../axios';
 import { setToken } from '../../token';
 import Form from '../../components/Form/Form';
-import FormField from "../../components/Form/FormField/FormField";
-import FormButton from "../../components/Form/FormButton/FormButton";
+import FormField from '../../components/Form/FormField/FormField';
+import FormButton from '../../components/Form/FormButton/FormButton';
 
 import {login, showModal} from '../../store/actions';
 
@@ -43,9 +43,9 @@ class Login extends Component {
         }
         else {
             this.props.setModal({
-                type: "error",
-                title: "Error",
-                text: "Please enter all login details"
+                type: 'error',
+                title: 'Error',
+                text: 'Please enter all login details'
             });
         }
     };
