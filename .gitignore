@@ -1,6 +1,6 @@
-client/node_modules
 client/build
 data
+config.json
 
 
 # Created by .ignore support plugin (hsz.mobi)
