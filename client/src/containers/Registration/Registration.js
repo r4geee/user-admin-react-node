@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import connect from 'react-redux/es/connect/connect';
+import {withRouter} from 'react-router';
+
 import Form from '../../components/Form/Form';
 import FormField from '../../components/Form/FormField/FormField';
 import FormButton from '../../components/Form/FormButton/FormButton';
 import axios from '../../axios';
 import {showModal} from '../../store/actions';
-import connect from 'react-redux/es/connect/connect';
 
 class Registration extends Component {
     state = {
@@ -44,6 +46,7 @@ class Registration extends Component {
                 password: this.state.password
             })
                 .then(response => {
+                    this.props.history.push('/');
                     this.props.setModal({
                         type: 'success',
                         title: 'Success',
@@ -103,4 +106,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(Registration);
+export default withRouter(connect(null, mapDispatchToProps)(Registration));
