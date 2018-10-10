@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
         if (err) {
             res.sendStatus(403);
         }
-        users.checkUser(user)
+        users.checkUser(user.email, user.password)
             .then(() => {
                 return users.addLoginEntry(user.email);
             })
@@ -95,7 +95,8 @@ router.get('/user', verifyToken, (req, res) => {
 });
 
 router.post('/new-user', (req, res) => {
-    users.addUser(req.body)
+    const { email, password } = req.body;
+    users.addUser(email, password)
         .then(() => {
             res.sendStatus(200);
         })

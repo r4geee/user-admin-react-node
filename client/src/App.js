@@ -28,13 +28,13 @@ class App extends Component {
                                 <Route path="/login" component={Login}/>
                                 <Route path="/register" component={Registration}/>
                                 <Route path="/recovery" component={PasswordRecovery}/>
-                                <Redirect exact from="/" to="/login"/>
+                                <Redirect from="*" to="/login"/>
                             </Switch>) : (
                             <Switch>
                                 <Route path={'/users/:id'} exact component={UserDetails}/>
                                 <Route path="/users" component={Users}/>
                                 <Route path="/add-user" component={AddUser}/>
-                                <Redirect exact from="/" to="/users"/>
+                                <Redirect from="*" to="/users"/>
                             </Switch>)}
                     </Layout>
                 </div>

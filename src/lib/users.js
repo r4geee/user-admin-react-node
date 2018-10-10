@@ -46,20 +46,20 @@ usersModule.getUsers = () => {
     });
 };
 
-usersModule.addUser = (userData) => {
+usersModule.addUser = (email, pw) => {
     return new Promise(async (resolve, reject) => {
-        const pw = userData.password;
-        delete userData.password;
-        if (!!findUserBy('email', userData.email)) {
+        if (!!findUserBy('email', email)) {
             reject("User already exists");
         }
         if (!password.validatePassword(pw)) {
             reject("Invalid password");
         }
 
+        const userData = {};
+        userData.email = email;
         userData.passwordHash = md5(pw);
-
         userData.id = uuidv1();
+
         const users = await this.getUsers();
         users.push(userData);
         writeFile(users);
@@ -83,11 +83,11 @@ usersModule.deleteUser = (userId) => {
     });
 };
 
-usersModule.checkUser = (userData) => {
+usersModule.checkUser = (email, pw) => {
     return new Promise(async (resolve, reject) => {
         const users = await this.getUsers();
-        const passwordHash = md5(userData.password);
-        if (!!users.find(user => user.email === userData.email && user.passwordHash === passwordHash)) {
+        const passwordHash = md5(pw);
+        if (!!users.find(user => user.email === email && user.passwordHash === passwordHash)) {
             resolve();
         }
         else {

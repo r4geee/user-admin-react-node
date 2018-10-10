@@ -19,5 +19,8 @@ app.all('/*', (req, res, next) => {
 });
 
 app.use('/api', api);
+app.get('*',function(req, res) {
+    res.sendFile(path.join(__dirname + '../../../client/build/index.html'));
+});
 // eslint-disable-next-line no-console
 app.listen(CONF.http.port, () => console.log(`Listening on port ${CONF.http.port}!`));
