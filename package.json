@@ -4,6 +4,7 @@
   "description": "Example express-react app",
   "main": "index.js",
   "scripts": {
+    "install-all": "npm install && cd client && npm install",
     "devclient": "cd client && npm run start",
     "devserver": "./node_modules/nodemon/bin/nodemon.js src/bin/example-express-react",
     "dev": "concurrently 'npm run devserver' 'npm run devclient'",

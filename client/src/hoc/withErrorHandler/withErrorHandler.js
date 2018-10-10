@@ -18,7 +18,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 this.props.setModal({
                     type: 'error',
                     title: 'Error',
-                    text: error.message
+                    text: error.response.data ? error.response.data:  error.message
                 });
                 return Promise.reject(error);
             })

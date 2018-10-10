@@ -41,78 +41,110 @@ const findUserBy = (fieldName, fieldValue) => {
 };
 
 usersModule.getUsers = () => {
-    return readFile();
+    return new Promise((resolve) => {
+        resolve(readFile())
+    });
 };
 
 usersModule.addUser = (userData) => {
-    const pw = userData.password;
-    delete userData.password;
+    return new Promise(async (resolve, reject) => {
+        const pw = userData.password;
+        delete userData.password;
+        if (!!findUserBy('email', userData.email)) {
+            reject("User already exists");
+        }
+        if (!password.validatePassword(pw)) {
+            reject("Invalid password");
+        }
 
-    if (!!findUserBy('email', userData.email) || !password.validatePassword(pw)) return false;
+        userData.passwordHash = md5(pw);
 
-    userData.passwordHash = md5(pw);
+        userData.id = uuidv1();
+        const users = await this.getUsers();
+        users.push(userData);
+        writeFile(users);
 
-    userData.id = uuidv1();
-    const users = this.getUsers();
-    users.push(userData);
-    writeFile(users);
+        email.sendEmail(userData.email, 'Account created', 'Password:', pw);
+        resolve()
+    });
 
-    email.sendEmail(userData.email, 'Account created', 'Password:', pw);
-    return true;
 };
 
 usersModule.deleteUser = (userId) => {
-    const userToDelete = findUserBy('id', userId);
-    if (!userToDelete) return;
+    return new Promise(async (resolve, reject) => {
+        const userToDelete = findUserBy('id', userId);
+        if (!userToDelete) reject("User not found");
 
-    const allUsers = this.getUsers();
-    writeFile(allUsers.filter(u => u.id !== userId));
+        const allUsers = await this.getUsers();
+        writeFile(allUsers.filter(u => u.id !== userId));
 
-    email.sendEmail(userToDelete.email, 'Account deleted', 'Notification', 'Your account has been deleted');
-    return true;
+        email.sendEmail(userToDelete.email, 'Account deleted', 'Notification', 'Your account has been deleted');
+        resolve();
+    });
 };
 
 usersModule.checkUser = (userData) => {
-    const users = this.getUsers();
-    const passwordHash = md5(userData.password);
-    return !!users.find(user => user.email === userData.email && user.passwordHash === passwordHash);
+    return new Promise(async (resolve, reject) => {
+        const users = await this.getUsers();
+        const passwordHash = md5(userData.password);
+        if (!!users.find(user => user.email === userData.email && user.passwordHash === passwordHash)) {
+            resolve();
+        }
+        else {
+            reject('User validation failed');
+        }
+    });
 };
 
 usersModule.checkUserExists = (userEmail) => {
-    const users = this.getUsers();
-    return !!users.find(user => user.email === userEmail);
+    return new Promise(async (resolve, reject) => {
+        const users = await this.getUsers();
+        if (!!users.find(user => user.email === userEmail)) {
+            resolve();
+        }
+        else {
+            reject("User not found")
+        }
+    });
 };
 
 usersModule.changeUserPassword = (userEmail, newPassword) => {
-    const users = this.getUsers();
-    let found = false;
-    users.forEach((user) => {
-        if (user.email === userEmail) {
-            found = true;
+    return new Promise(async (resolve, reject) => {
+        const users = await this.getUsers();
+        let found = false;
+        users.forEach((user) => {
+            if (user.email === userEmail) {
+                found = true;
 
-            user.passwordHash = md5(newPassword);
-        }
+                user.passwordHash = md5(newPassword);
+            }
+        });
+
+        if (!found) reject("User not found");
+        writeFile(users);
+        resolve();
     });
-
-    if (!found) return;
-    writeFile(users);
 };
 
 usersModule.addLoginEntry = (userEmail) => {
-    const users = this.getUsers();
-    let found = false;
-    users.forEach((user) => {
-        if (user.email === userEmail) {
-            found = true;
+    return new Promise(async (resolve, reject) => {
+        const users = await this.getUsers();
+        let found = false;
+        users.forEach((user) => {
+            if (user.email === userEmail) {
+                found = true;
 
-            if (!user.logins) {
-                user.logins = [];
+                if (!user.logins) {
+                    user.logins = [];
+                }
+
+                user.logins.push(moment().format('DD-MM-YYYY hh:mm:ss'));
             }
+        });
 
-            user.logins.push(moment().format('DD-MM-YYYY hh:mm:ss'));
-        }
+        if (!found) reject("User not found");
+        writeFile(users);
+        resolve();
     });
 
-    if (!found) return;
-    writeFile(users);
 };

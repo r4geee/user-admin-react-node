@@ -5,14 +5,30 @@ const users = require('./users');
 const recovery = module.exports;
 
 const makeNewPassword = (emailAddress) => {
-    const newPassword = password.generatePassword();
-    users.changeUserPassword(emailAddress, newPassword);
-    return newPassword;
+    return new Promise((resolve, reject) => {
+        const newPassword = password.generatePassword();
+        users.changeUserPassword(emailAddress, newPassword)
+            .then(() => {
+               resolve(newPassword);
+            })
+            .catch(() => {
+                reject()
+            });
+    })
 };
 
 recovery.recover = (emailAddress) => {
-    if (!users.checkUserExists(emailAddress)) return;
+    return new Promise((resolve, reject) => {
+        users.checkUserExists(emailAddress)
+            .then(() => {
+                return makeNewPassword(emailAddress);
+            })
+            .then((newPassword) => {
+                email.sendEmail(emailAddress, 'Password recovery', 'New password:', newPassword);
+                resolve();
+            })
+            .catch(() => reject("Unable to recover"));
 
-    const newPassword = makeNewPassword(emailAddress);
-    email.sendEmail(emailAddress, 'Password recovery', 'New password:', newPassword);
+
+    })
 };

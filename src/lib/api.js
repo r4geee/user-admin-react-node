@@ -23,18 +23,24 @@ router.post('/login', (req, res) => {
         password: req.body.password
     };
     jwt.sign({ user }, 'secretkey', { expiresIn: '10m' }, (err, token) => {
-        if (users.checkUser(user) && !err) {
-            users.addLoginEntry(user.email);
-            res.json({ token });
-        }
-        else {
+        if (err) {
             res.sendStatus(403);
         }
+        users.checkUser(user)
+            .then(() => {
+                return users.addLoginEntry(user.email);
+            })
+            .then(() => {
+                res.json({ token });
+            })
+            .catch((error) => {
+                res.status(403).send(error);
+            });
     });
 });
 
 router.get('/users', verifyToken, (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err) => {
+    jwt.verify(req.token, 'secretkey', async (err) => {
         if (err) {
             res.sendStatus(403);
         }
@@ -42,7 +48,7 @@ router.get('/users', verifyToken, (req, res) => {
             let from = +req.query.from;
             const limit = +req.query.limit;
 
-            const allUsers = users.getUsers();
+            const allUsers = await users.getUsers();
 
             if (from > allUsers.length) {
                 from = allUsers.length - limit;
@@ -67,13 +73,13 @@ router.get('/users', verifyToken, (req, res) => {
 });
 
 router.get('/user', verifyToken, (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err) => {
+    jwt.verify(req.token, 'secretkey', async (err) => {
         if (err) {
             res.sendStatus(403);
         }
         else {
             const { id } = req.query;
-            const requestedUser = users.getUsers().find(user => user.id === id);
+            const requestedUser = (await users.getUsers()).find(user => user.id === id);
             if (requestedUser) {
                 res.json({
                     email: requestedUser.email,
@@ -89,13 +95,13 @@ router.get('/user', verifyToken, (req, res) => {
 });
 
 router.post('/new-user', (req, res) => {
-    const success = users.addUser(req.body);
-    if (success) {
-        res.sendStatus(200);
-    }
-    else {
-        res.sendStatus(403);
-    }
+    users.addUser(req.body)
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            res.status(403).send(error);
+        });
 });
 
 router.post('/delete-user', verifyToken, (req, res) => {
@@ -104,21 +110,23 @@ router.post('/delete-user', verifyToken, (req, res) => {
             res.sendStatus(403);
         }
         else {
-            const success = users.deleteUser(req.body.id);
-            if (success) {
-                res.sendStatus(200);
-            }
-            else {
-                res.sendStatus(403);
-            }
+            users.deleteUser(req.body.id)
+                .then(() => {
+                    res.sendStatus(200);
+                })
+                .catch((error) => {
+                    res.status(403).send(error);
+                });
         }
     });
 });
 
 router.post('/recovery', (req, res) => {
     const { email } = req.body;
-    recovery.recover(email);
-    res.sendStatus(200);
+    recovery.recover(email)
+        .then(() => {
+            res.sendStatus(200);
+        });
 });
 
 
