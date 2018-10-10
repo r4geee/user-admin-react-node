@@ -1,4 +1,4 @@
-const email = require('./email');
+const emailService = require('./email_service');
 const password = require('./password');
 const users = require('./users');
 
@@ -24,7 +24,7 @@ recovery.recover = (emailAddress) => {
                 return makeNewPassword(emailAddress);
             })
             .then((newPassword) => {
-                email.sendEmail(emailAddress, 'Password recovery', 'New password:', newPassword);
+                emailService.sendEmail(emailAddress, 'Password recovery', 'New password:', newPassword);
                 resolve();
             })
             .catch(() => reject("Unable to recover"));

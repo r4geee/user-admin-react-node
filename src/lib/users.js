@@ -6,7 +6,7 @@ const moment = require('moment');
 const md5 = require('md5');
 
 const password = require('./password');
-const email = require('./email');
+const emailService = require('./email_service');
 
 const usersModule = module.exports;
 
@@ -64,7 +64,7 @@ usersModule.addUser = (email, pw) => {
         users.push(userData);
         writeFile(users);
 
-        email.sendEmail(userData.email, 'Account created', 'Password:', pw);
+        emailService.sendEmail(userData.email, 'Account created', 'Password:', pw);
         resolve()
     });
 
@@ -78,7 +78,7 @@ usersModule.deleteUser = (userId) => {
         const allUsers = await this.getUsers();
         writeFile(allUsers.filter(u => u.id !== userId));
 
-        email.sendEmail(userToDelete.email, 'Account deleted', 'Notification', 'Your account has been deleted');
+        emailService.sendEmail(userToDelete.email, 'Account deleted', 'Notification', 'Your account has been deleted');
         resolve();
     });
 };
