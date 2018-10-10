@@ -7,7 +7,7 @@ import Form from '../../components/Form/Form';
 import FormField from "../../components/Form/FormField/FormField";
 import FormButton from "../../components/Form/FormButton/FormButton";
 
-import { login } from '../../store/actions';
+import {login, showModal} from '../../store/actions';
 
 class Login extends Component {
     state = {
@@ -39,13 +39,14 @@ class Login extends Component {
                     setToken(response.data.token);
                     this.props.onLogin();
                     this.props.history.push('/');
-                })
-                .catch(error => {
-                    //todo show error
                 });
         }
         else {
-            //todo show error
+            this.props.setModal({
+                type: "error",
+                title: "Error",
+                text: "Please enter all login details"
+            });
         }
     };
 
@@ -80,7 +81,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: () => dispatch(login())
+        onLogin: () => dispatch(login()),
+        setModal: modal => dispatch(showModal(modal))
     }
 };
 

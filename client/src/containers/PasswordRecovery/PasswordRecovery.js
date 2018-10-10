@@ -4,8 +4,10 @@ import Form from '../../components/Form/Form';
 import FormField from "../../components/Form/FormField/FormField";
 import FormButton from "../../components/Form/FormButton/FormButton";
 import axios from "../../axios";
+import {showModal} from "../../store/actions";
+import connect from "react-redux/es/connect/connect";
 
-class Login extends Component {
+class PasswordRecovery extends Component {
     state = {
         email: ''
     };
@@ -18,19 +20,23 @@ class Login extends Component {
     };
 
     recoverButtonClickHandler = () => {
-        if (this.state.password === this.state.passwordConfirm) {
+        if (this.state.email.length) {
             axios.post('/recovery', {
                 email: this.state.email
-            })
-                .then(response => {
-                    //todo show success
-                })
-                .catch(error => {
-                    //todo show error
+            }).then(response => {
+                this.props.setModal({
+                    type: "success",
+                    title: "Success",
+                    text: "New password will be sent to your email"
                 });
+            })
         }
         else {
-            //todo show error
+            this.props.setModal({
+                type: "error",
+                title: "Error",
+                text: "Please enter email address"
+            });
         }
     };
 
@@ -55,4 +61,10 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+    return {
+        setModal: modal => dispatch(showModal(modal))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(PasswordRecovery);

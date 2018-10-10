@@ -5,11 +5,14 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import { deleteToken } from "../../../token";
 import { logout } from '../../../store/actions';
+import NavigationButton from "./NavigationButton/NavigationButton";
+import {withRouter} from "react-router";
 
 class NavigationItems extends Component {
     onLogoutHandler = () => {
         deleteToken();
         this.props.onLogout();
+        this.props.history.push('/');
     };
 
     render () {
@@ -30,9 +33,9 @@ class NavigationItems extends Component {
 
         const onRightItems = this.props.auth ?
             (
-                <ul className="nav navbar-nav navbar-right">
-                    <NavigationItem clicked={this.onLogoutHandler} active>Logout</NavigationItem>
-                </ul>
+                <NavigationButton right clicked={this.onLogoutHandler} active>
+                    Logout
+                </NavigationButton>
             ) : null;
         return (
             <Aux>
@@ -54,5 +57,4 @@ const mapDispatchToProps = dispatch => {
         onLogout: () => dispatch(logout())
     }
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationItems);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavigationItems));

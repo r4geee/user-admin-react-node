@@ -3,10 +3,6 @@ import Modal from 'react-bootstrap-modal';
 import 'react-bootstrap-modal/lib/css/rbm-patch.css'
 
 class AppModal extends Component {
-    state = {
-        show: false
-    };
-
     shouldComponentUpdate (nextProps, nextState) {
         return nextProps.show !== this.props.show ||
             nextProps.children !== this.props.children;
@@ -20,9 +16,10 @@ class AppModal extends Component {
                 <Modal
                     show={!!this.props.show}
                     aria-labelledby="ModalHeader"
+                    onHide={this.closeModal}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title id='ModalHeader'>{this.props.header}</Modal.Title>
+                        <Modal.Title>{this.props.title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {this.props.children}

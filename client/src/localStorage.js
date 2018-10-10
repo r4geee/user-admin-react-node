@@ -1,12 +1,14 @@
+import lscache from 'lscache';
+
 const key = 'user-admin-react-node-token';
 export const getTokenFromLS = () => {
-    return localStorage.getItem(key);
+    return lscache.get(key);
 };
 export const setTokenToLs = token => {
-    localStorage.setItem(key, token)
+    lscache.set(key, token, 10)
 };
 
 export const deleteTokenFromLs = () => {
-    localStorage.removeItem(key);
+    lscache.remove(key);
 };
 

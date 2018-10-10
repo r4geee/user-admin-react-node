@@ -1,0 +1,9 @@
+.UserList {
+  margin-top: 15px;
+  .UserListItem {
+    cursor: pointer;
+    &:hover {
+      background-color: #f8f8f8;
+    }
+  }
+}

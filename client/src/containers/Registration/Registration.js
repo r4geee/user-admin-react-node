@@ -3,6 +3,8 @@ import Form from "../../components/Form/Form";
 import FormField from "../../components/Form/FormField/FormField";
 import FormButton from "../../components/Form/FormButton/FormButton";
 import axios from "../../axios";
+import {showModal} from "../../store/actions";
+import connect from "react-redux/es/connect/connect";
 
 class Registration extends Component {
     state = {
@@ -42,14 +44,19 @@ class Registration extends Component {
                 password: this.state.password
             })
                 .then(response => {
-                    //todo show success
+                    this.props.setModal({
+                        type: "success",
+                        title: "Success",
+                        text: "New user registered"
+                    });
                 })
-                .catch(error => {
-                    //todo show error
-                });
         }
         else {
-            //todo show error
+            this.props.setModal({
+                type: "error",
+                title: "Error",
+                text: "User registration failed"
+            });
         }
     };
 
@@ -90,4 +97,10 @@ class Registration extends Component {
     }
 }
 
-export default Registration;
+const mapDispatchToProps = dispatch => {
+    return {
+        setModal: modal => dispatch(showModal(modal))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(Registration);

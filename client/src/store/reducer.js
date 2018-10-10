@@ -2,7 +2,8 @@ import * as actionTypes from './actionTypes';
 import {getTokenFromLS} from '../localStorage';
 
 const initialState = {
-    auth: !!getTokenFromLS()
+    auth: !!getTokenFromLS(),
+    modal: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,18 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             auth: false
+        };
+    case actionTypes.MODAL_SHOW:
+        return {
+            ...state,
+            modal: {
+                ...action.modal
+            }
+        };
+    case actionTypes.MODAL_HIDE:
+        return {
+            ...state,
+            modal: null
         };
     }
     return state;
